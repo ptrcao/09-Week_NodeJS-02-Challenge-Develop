@@ -1,14 +1,30 @@
 {
-  "name": "static-site",
+  "name": "readme-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "A package/module which allows a properly-formatted readme to be quickly generated in response to some developer inputs.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Peter C.",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "8.2.4"
-  }
+    "inquirer": "^8.2.4",
+    "inquirer-file-path": "^1.0.1",
+    "node-fetch": "^3.3.0",
+    "shields": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptrcao/09-Week_NodeJS-02-Challenge-Develop.git"
+  },
+  "keywords": [
+    "readme",
+    "generator"
+  ],
+  "bugs": {
+    "url": "https://github.com/ptrcao/09-Week_NodeJS-02-Challenge-Develop/issues"
+  },
+  "homepage": "https://github.com/ptrcao/09-Week_NodeJS-02-Challenge-Develop#readme"
 }
