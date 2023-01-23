@@ -1,63 +1,72 @@
 // TODO: Include packages needed for this application
 
 // const fs = require('fs');
-import * as fs from 'fs';
+import * as fs from "fs";
 // const fetch = require('node-fetch');
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
 // const inquirer = require('inquirer');
-import inquirer from 'inquirer';
+import inquirer from "inquirer";
 
+const validateUsername = async function (input) {
+  console.log(input);
+
+  const response = await fetch(
+    `https://api.github.com/users/${input}`
+  );
+  // console.log(response);
+  const data = await response.json();
+  console.log(data.message);
+
+  if (data.message) {
+    if (data.message === "Not Found") {
+      return "User was not found, please use a valid username.";
+    }
+  } else {
+    return true;
+  }
+};
 
 inquirer
   .prompt([
     {
-        name: 'projectName',
-        message: 'What the project name?',
-        type: 'input'
+      name: "projectName",
+      message: "What the project name?",
+      type: "input",
     },
     {
-        name: 'projectDescription',
-        message: 'What the project description?',
-        type: 'input'
+      name: "projectDescription",
+      message: "What the project description?",
+      type: "input",
     },
     {
-        type: 'input',
-        name: 'githubUser',
-        message: 'What is your Github username? (This is needed for Shields badges and is used to retrieve code size, repo size, repo file count and licence type)',
+      type: "input",
+      name: "githubUser",
+      message:
+        "What is your Github username? (This is needed for Shields badges and is used to retrieve code size, repo size, repo file count and licence type)",
 
-        validate: async function() {await validateUsername}
-        
-
-
+      validate: validateUsername,
     },
     {
-        name: 'githubRepoName',
-        message: 'What is the Github repository name? (This is needed for Shields badges and is used to retrieve code size, repo size, repo file count)',
-        type: 'input'
+      name: "githubRepoName",
+      message:
+        "What is the Github repository name? (This is needed for Shields badges and is used to retrieve code size, repo size, repo file count)",
+      type: "input",
     },
     {
-        name: 'contribution',
-        message: 'Please provide your call to contributions and any relevant information here.',
-        type: 'input'
+      name: "contribution",
+      message:
+        "Please provide your call to contributions and any relevant information here.",
+      type: "input",
     },
     {
-        type: 'list',
-        name: 'licence',
-        message: 'What type of licence applies to your project?',
-        choices: ['Get the licence from my gitHub'],
+      type: "list",
+      name: "licence",
+      message: "What type of licence applies to your project?",
+      choices: ["Get the licence from my gitHub"],
     },
   ])
   .then((answers) => {
-    // console.log(answers)
-    // console.log(
-    //     answers.projectName
-    // )
-    // console.log(
-    //     answers.projectDescription
-    // )
-
-
     const data = `
 # ${answers.projectName}
 
@@ -130,10 +139,10 @@ If you created an application or package and would like other developers to cont
 ## Tests
 
 Go the extra mile and write tests for your application. Then provide examples on how to run them here.
-`
-// Indentation is important, the md will not render properly if you have indents as indents have a specific formatting meaning and will not be ignored
+`;
+    // Indentation is important, the md will not render properly if you have indents as indents have a specific formatting meaning and will not be ignored
 
-    writeToFile(answers.projectName, data, {encoding: "utf8"})
+    writeToFile(answers.projectName, data, { encoding: "utf8" });
   })
   .catch((error) => {
     if (error.isTtyError) {
@@ -143,19 +152,17 @@ Go the extra mile and write tests for your application. Then provide examples on
     }
   });
 
-
 // TODO: Create an array of questions for user input
 const questions = [];
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data, options) {
-    fs.writeFile(`${fileName}.md`, data, options, (err) => {
-        if (err){
-            console.error(err);
-        }
-        //console.error(err)
-    })
-
+  fs.writeFile(`${fileName}.md`, data, options, (err) => {
+    if (err) {
+      console.error(err);
+    }
+    //console.error(err)
+  });
 }
 
 // TODO: Create a function to initialize app
@@ -164,30 +171,5 @@ function init() {}
 // Function call to initialize app
 init();
 
-
 // blank
 // illegal characters
-
-
-
-
-const validateUsername = function() {
-
-fetch(`https://api.github.com/users/${input}`)
-		.then( response => {
-            // console.log(response);
-            response.json();
-        }) //Converting the response to a JSON object
-		.then( data => {
-            console.log(data);
-            if(data.message){
-                if(data.message === 'Not Found'){
-                    return 'User was not found, please use a valid username.'; 
-                }
-            }
-            else{
-            return true;
-            }
-        })
-
-    }
