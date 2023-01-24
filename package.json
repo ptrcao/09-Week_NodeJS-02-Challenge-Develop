@@ -10,8 +10,8 @@
   "author": "Peter C.",
   "license": "ISC",
   "dependencies": {
+    "email-validator": "^2.0.4",
     "inquirer": "^8.2.4",
-    "inquirer-file-path": "^1.0.1",
     "node-fetch": "^3.3.0",
     "shields": "^2.1.0"
   },
